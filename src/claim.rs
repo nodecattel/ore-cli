@@ -1,6 +1,7 @@
 use std::str::FromStr;
 
 use ore::{self, state::Proof, utils::AccountDeserialize};
+// use rand::rngs::adapter;
 use solana_program::pubkey::Pubkey;
 use solana_sdk::{
 	compute_budget::ComputeBudgetInstruction, 
@@ -44,7 +45,7 @@ impl Miner {
         let claim_ix = ore::instruction::claim(pubkey, beneficiary, amount);
         print!("CLAIM Rewards:\tSubmitting claim transaction...priority_fee: {:?} ", self.priority_fee);
         match self
-            .send_and_confirm(&[cu_limit_ix, cu_price_ix, claim_ix], false, false)
+            .send_and_confirm(&[cu_limit_ix, cu_price_ix, claim_ix], false, false, self.priority_fee)
             .await
         {
             Ok(sig) => {
@@ -81,7 +82,7 @@ impl Miner {
             &spl_token::id(),
         );
         println!("Creating token account {}...", token_account_pubkey);
-        match self.send_and_confirm(&[ix], true, false).await {
+        match self.send_and_confirm(&[ix], true, false, self.priority_fee).await {
             Ok(_sig) => println!("Created token account {:?}", token_account_pubkey),
             Err(e) => println!("Transaction failed: {:?}", e),
         }

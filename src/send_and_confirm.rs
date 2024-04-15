@@ -33,13 +33,14 @@ impl Miner {
         ixs: &[Instruction],
         dynamic_cus: bool,
         skip_confirm: bool,
+		adjusted_priority_fee: u64,
     ) -> ClientResult<Signature> {
 		// let startTime = Instant::now();
         let mut stdout = stdout();
         let signer = self.signer();
         let client = self.rpc_client.clone();
 
-        // Return error if balance is zero
+		// Return error if balance is zero
         let balance = client.get_balance(&signer.pubkey()).await.unwrap();
         if balance <= 0 {
             return Err(ClientError {
@@ -91,11 +92,8 @@ impl Miner {
 						if let Some(units_consumed) = sim_res.value.units_consumed {
 							if dynamic_cus {
 								println!("\n\t[PASS]\tDynamic CUs: {:?}", units_consumed);
-								let cu_budget_ix = ComputeBudgetInstruction::set_compute_unit_limit(
-									units_consumed as u32 + 1000,
-								);
-								let cu_price_ix =
-									ComputeBudgetInstruction::set_compute_unit_price(self.priority_fee);
+								let cu_budget_ix = ComputeBudgetInstruction::set_compute_unit_limit(units_consumed as u32 + 1000);
+								let cu_price_ix = ComputeBudgetInstruction::set_compute_unit_price(adjusted_priority_fee);
 								let mut final_ixs = vec![];
 								final_ixs.extend_from_slice(&[cu_budget_ix, cu_price_ix]);
 								final_ixs.extend_from_slice(ixs);
@@ -178,12 +176,12 @@ impl Miner {
                                                 .unwrap();
                                             match current_commitment {
                                                 TransactionConfirmationStatus::Processed => {}
-                                                TransactionConfirmationStatus::Confirmed
-                                                | TransactionConfirmationStatus::Finalized => {
+                                                TransactionConfirmationStatus::Confirmed | TransactionConfirmationStatus::Finalized => {
                                                     println!("[SUCCESS]\tTransaction landed!");
-                                                    // std::thread::sleep(Duration::from_millis(
-                                                    //     GATEWAY_DELAY,
-                                                    // ));
+													// Give it some time to settle in otherwise reward does not show
+                                                    std::thread::sleep(Duration::from_millis(
+                                                        GATEWAY_DELAY,
+                                                    ));
                                                     return Ok(sig);
                                                 }
                                             }
