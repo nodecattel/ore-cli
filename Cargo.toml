@@ -9,6 +9,10 @@ edition = "2021"
 name = "ore"
 path = "src/main.rs"
 
+[profile.release]
+overflow-checks = false     # Disable integer overflow checks.
+lto = true
+
 [features]
 default = []
 admin = []
