@@ -3,6 +3,7 @@ A command line interface for the Ore program.
 
 ## Don't do this
 If you are not familiar with installing/configuring programs from source then this guide is not really for you. Use the packaged version listed in the main ore-cli repository.
+https://github.com/regolith-labs/ore-cli
 
 ## Cloning the repositories
 You will need to have git installed on your computer to clone, build and test this software. On debian/ubuntu this can usualy be done with ```sudo apt install git```. If this does not work, please google how to install git on your OS.
@@ -14,7 +15,7 @@ First create a suitable folder to clone the 3 git repositories to:
 mkdir ~/ore2; cd ~/ore2
 git clone https://github.com/regolith-labs/ore-cli
 or if you want to use this version
-git clone https://github.com/pmcochrane/ore-cli
+git clone -b extended_stats --single-branch https://github.com/pmcochrane/ore-cli.git
 ```
 Execute each command separately one after the other watching for errors on the way.
 
