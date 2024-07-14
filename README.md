@@ -1,6 +1,9 @@
 # Ore CLI
 A command line interface for the Ore program.
 
+## Don't do this
+If you are not familiar with installing/configuring programs from source then this guide is not really for you. Use the packaged version listed in the main ore-cli repository.
+
 ## Cloning the repositories
 You will need to have git installed on your computer to clone, build and test this software. On debian/ubuntu this can usualy be done with ```sudo apt install git```. If this does not work, please google how to install git on your OS.
 
@@ -9,16 +12,11 @@ You will need to have build tools installed on your computer to enable compilati
 First create a suitable folder to clone the 3 git repositories to:
 ```sh
 mkdir ~/ore2; cd ~/ore2
+git clone https://github.com/regolith-labs/ore-cli
+or if you want to use this version
 git clone https://github.com/pmcochrane/ore-cli
-git clone https://github.com/regolith-labs/ore
-git clone https://github.com/regolith-labs/drillx
-cd ~/ore2/ore && git checkout hardhat/v2
-cd ~/ore2/ore-cli && git checkout hardhat/v2
 ```
 Execute each command separately one after the other watching for errors on the way.
-
-NOTE: IF PULL REQUEST IS MERGED then link above should read git clone ```https://github.com/regolith-labs/ore-cli```
-
 
 ## Building the utility
 To build the Ore CLI, you will need to have the Rust programming language installed. You can install Rust by following the instructions on the [Rust website](https://www.rust-lang.org/tools/install).
@@ -71,7 +69,8 @@ ELECTRICITY_COST_PER_KILOWATT_HOUR: This will be used to calculate the cost of e
 ## Setting up a wallet
 Each miner requires a unique wallet to mine to because of the staking mechanism. It is pointless to mine the same wallet on multiple miners. You can create a new wallet for use with ore-cli using the script below. Note that devnet wallet are not interchangeable with mainnet wallets and your RPC URL dictates what network the new wallet will be valid on.
 ```sh
-./createwallet.sh ~/.config/solana/wallet_devnet_test1.json
+mkdir ~/ore2/ore-cli/wallets
+./createwallet.sh ~/ore2/ore-cli/wallets/wallet_devnet_test1.json
 ```
 Note that this script will use the RPC1 URL defined in your configuration. This will lead you through creating a keypair file. It can be called whatever you like as long as you know where you create it and what it is called. It is best to keep these outside of the ore-cli folder so that it cannot accidentally be uploaded to git.
 
