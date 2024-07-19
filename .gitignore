@@ -1,9 +1,13 @@
+/logs
+/pools
+/stats
+/wallets
 /target
 output.log
 ore_env.priv.sh
-/ore
-/pools
-/stats
+ore
 currentPriceOf*.txt
-logs
 cv_debug.log
+node_modules
+dashboard/build
+dashboard/public/dashboarddata
