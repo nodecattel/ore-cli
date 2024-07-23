@@ -163,15 +163,15 @@ impl Miner {
                                                 TransactionConfirmationStatus::Confirmed
                                                 | TransactionConfirmationStatus::Finalized => {
                                                     let mess=format!(
-                                                        "[{}{}]  Attempt {}-{}: {}\t\tTxid: {}",
+                                                        "[{}{}]  Attempt {}-{}: {}",
 														submit_start_time.elapsed().as_secs().to_string().dimmed(),
 														"s".dimmed(),
 														attempts,
 														confirm_counter+1,
                                                         "SUCCESS".bold().green(),
-                                                        sig.to_string().dimmed()
                                                     );
                                                     progress_bar.finish_with_message(mess.clone());
+													println!("        \tTx:{}", sig.to_string().dimmed());
 													log_tx+=mess.as_str();
 													return Ok(sig);
                                                 }

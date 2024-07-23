@@ -453,13 +453,6 @@ impl Miner {
 					compute_budget += 100_000;
 					ixs.push(ore_api::instruction::reset(signer.pubkey()));
 				}
-				if self.should_crown(config, proof).await {
-					compute_budget += 250_000;
-					ixs.push(ore_api::instruction::crown(
-						signer.pubkey(),
-						config.top_staker,
-					))
-				}
 				ixs.push(ore_api::instruction::mine(
                 signer.pubkey(),
 					signer.pubkey(),
@@ -569,11 +562,12 @@ impl Miner {
 										break;
 									}
 									// Terminate this thread if we have attained a desired difficulty level
-									if best_difficulty.gt(&ore_api::consts::MIN_DIFFICULTY) {
-									// if best_difficulty.gt(&ore::MIN_DIFFICULTY) && global_max_difficulty.ge(&rig_desired_difficulty_level) {
-										// Mine until min difficulty has been met
-										break;
-									}
+									// if best_difficulty.gt(config.min_difficulty) {
+									// // if best_difficulty.gt(&ore::MIN_DIFFICULTY) && global_max_difficulty.ge(&rig_desired_difficulty_level) {
+									// 	// Mine until min difficulty has been met
+									// 	break;
+									// }
+									break;
 								}
 
 								// Only log for first thread - other threads are silent
@@ -682,11 +676,6 @@ impl Miner {
                 num_cores
             );
         }
-    }
-
-	// Determine if a reset is required ()
-    async fn should_crown(&self, config: Config, proof: Proof) -> bool {
-        proof.balance.gt(&config.max_stake)
     }
 
     async fn should_reset(&self, config: Config) -> bool {
