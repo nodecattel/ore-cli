@@ -13,8 +13,6 @@ You will need to have build tools installed on your computer to enable compilati
 First create a suitable folder to clone the 3 git repositories to:
 ```sh
 mkdir ~/ore2; cd ~/ore2
-git clone https://github.com/regolith-labs/ore-cli
-or if you want to use this version
 git clone -b extended_stats --single-branch https://github.com/pmcochrane/ore-cli.git
 ```
 Execute each command separately one after the other watching for errors on the way.
