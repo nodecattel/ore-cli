@@ -2576,7 +2576,7 @@ dependencies = [
 
 [[package]]
 name = "ore-cli"
-version = "1.0.0-mainnet"
+version = "1.0.0-mainnet-PeaEmCee"
 dependencies = [
  "bincode",
  "bs58 0.5.1",
