@@ -39,6 +39,8 @@ impl Miner {
 	pub async fn mine(&self, args: MineArgs) {
 		const MIN_SOL_BALANCE: f64 = 0.005;
 
+		println!("Starting to mine...");
+
 		// Register, if needed.
         let signer = self.signer();
         self.open().await;

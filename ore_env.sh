@@ -67,6 +67,7 @@ fi
 
 # check that the ore-cli binary is present
 ORE_BIN=./target/release/ore
+# ORE_BIN=ore
 if [ ! -f ${ORE_BIN} ]; then
 	echo "Sorry, the ore-cli file does not exist: ${ORE_BIN}"
 	exit 2

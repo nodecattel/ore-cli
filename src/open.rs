@@ -17,5 +17,6 @@ impl Miner {
         self.send_and_confirm(&[ix], ComputeBudget::Dynamic, false, false)
             .await
             .ok();
+        println!("Account has been registered.");
     }
 }
